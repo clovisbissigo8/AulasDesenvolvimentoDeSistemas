@@ -8,13 +8,11 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Modelo de dados do aluno usando Pydantic
 class Aluno(BaseModel):
     nome: str
     turma: str
     idade: int
 
-# "Banco de dados" em memória (um dicionário Python)
 db_alunos: Dict[int, Aluno] = {}
 
 # --- ENDPOINTS DA API ---
