@@ -1,0 +1,61 @@
+#1-
+def primos_no_intervalo(a, b):
+    def eh_primo(n):
+        if n < 2:
+            return False
+        for i in range(2, int(n ** 0.5) + 1):
+            if n % i == 0:
+                return False
+        return True
+
+    primos = []
+    for numero in range(a, b + 1):
+        if eh_primo(numero):
+            primos.append(numero)
+    return primos
+
+
+#2-
+print(primos_no_intervalo(10, 30))  # Saída: [11, 13, 17, 19, 23, 29]
+
+def ordenar_sem_repeticao(lista):
+    return sorted(set(lista))
+
+print(ordenar_sem_repeticao([4, 2, 7, 2, 3, 4]))  # Saída: [2, 3, 4, 7]
+
+#3-
+def soma_digitos(n):
+    return sum(int(digito) for digito in str(abs(n)))
+
+print(soma_digitos(1234))   # Saída: 10
+print(soma_digitos(-987))   # Saída: 24
+
+#4-
+def eh_palindromo(texto):
+    texto_limpo = ''.join(c.lower() for c in texto if c.isalnum())
+    return texto_limpo == texto_limpo[::-1]
+
+print(eh_palindromo("Ame a ema"))          # Saída: True
+print(eh_palindromo("Python"))             # Saída: False
+
+#5-
+def frequencia_palavras(texto):
+    palavras = texto.lower().split()
+    freq = {}
+    for palavra in palavras:
+        palavra = ''.join(c for c in palavra if c.isalnum())  # remove pontuação
+        if palavra:
+            freq[palavra] = freq.get(palavra, 0) + 1
+    return freq
+
+print(frequencia_palavras("O sol brilha. O Sol é quente!"))
+# Saída: {'o': 2, 'sol': 2, 'brilha': 1, 'é': 1, 'quente': 1}
+
+#6-
+def media_lista(lista):
+    if not lista:
+        return None
+    return sum(lista) / len(lista)
+
+print(media_lista([10, 20, 30]))  # Saída: 20.0
+print(media_lista([]))            # Saída: None
