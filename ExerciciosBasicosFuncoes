@@ -1,0 +1,44 @@
+def antecessor_sucessor(numero):
+    return numero - 1, numero + 1
+
+def formatar_duas_casas(numero):
+    return f"{numero:.2f}"
+
+def substituir_java_por_python(frase):
+    return frase.replace("Java", "Python")
+
+def numero_par_ou_impar(numero):
+    if numero % 2 == 0:
+        return f"O número {numero} é par"
+    return f"O número {numero} é impar"
+
+def classificar_idade(idade):
+    if idade < 12 and idade >= 1:
+        return "Criança"
+    elif idade >= 12 and idade <= 17:
+        return "Adolescente"
+    elif idade > 18 and idade <= 100:
+        return "Adulto"
+    return "Idade inválida"
+
+def maior_de_dois(n1, n2):
+    if n1 > n2:
+        return f"{n1} é maior que {n2}"
+    elif n1 == n2:
+        return f"{n1} é igual a {n2}"
+    return f"{n1} é menor que {n2}"
+
+def vogal_ou_consoante(letra):
+    if letra in "aeiou":
+        return "A letra digitada é uma vogal."
+    return "A letra digitada é uma consoante."
+
+def comparar_senhas(s1, s2):
+    if s1 == s2:
+        return "Acesso permitido!"
+    return "Acesso negado!"
+
+def media_aprovacao(n1, n2, n3):
+    media = (n1 + n2 + n3) / 3
+    if media >= 7 and media <= 10:
+        return f"O aluno está aprovado com média: {media}!"
