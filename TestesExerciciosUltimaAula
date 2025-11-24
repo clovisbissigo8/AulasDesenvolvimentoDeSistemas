@@ -1,6 +1,6 @@
 import unittest
 
-from seu_arquivo import (
+from ExerciciosUltimaAula import (
     primos_no_intervalo,
     ordenar_sem_repeticao,
     soma_digitos,
