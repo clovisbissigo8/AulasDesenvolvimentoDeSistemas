@@ -1,0 +1,65 @@
+import unittest
+from ExerciciosBasicosFuncoes import (
+    antecessor_sucessor,
+    formatar_duas_casas,
+    substituir_java_por_python,
+    numero_par_ou_impar,
+    classificar_idade,
+    maior_de_dois,
+    vogal_ou_consoante,
+    comparar_senhas,
+    media_aprovacao,
+    ordenar_decrescente,
+    litros_combustivel
+)
+
+class TestFuncoes(unittest.TestCase):
+
+    def test_antecessor_sucessor(self):
+        self.assertEqual(antecessor_sucessor(10), (9, 11))
+
+    def test_formatar_duas_casas(self):
+        self.assertEqual(formatar_duas_casas(5), "5.00")
+
+    def test_substituir_java_por_python(self):
+        self.assertEqual(substituir_java_por_python("Exercícios de Java"), "Exercícios de Python")
+
+    def test_numero_par_ou_impar(self):
+        self.assertEqual(numero_par_ou_impar(4), "O número 4 é par")
+        self.assertEqual(numero_par_ou_impar(7), "O número 7 é impar")
+
+    def test_classificar_idade(self):
+        self.assertEqual(classificar_idade(5), "Criança")
+        self.assertEqual(classificar_idade(15), "Adolescente")
+        self.assertEqual(classificar_idade(25), "Adulto")
+        self.assertEqual(classificar_idade(-2), "Idade inválida")
+
+    def test_maior_de_dois(self):
+        self.assertEqual(maior_de_dois(10, 5), "10 é maior que 5")
+        self.assertEqual(maior_de_dois(7, 7), "7 é igual a 7")
+        self.assertEqual(maior_de_dois(2, 8), "2 é menor que 8")
+
+    def test_vogal_ou_consoante(self):
+        self.assertEqual(vogal_ou_consoante("a"), "A letra digitada é uma vogal.")
+        self.assertEqual(vogal_ou_consoante("b"), "A letra digitada é uma consoante.")
+
+    def test_comparar_senhas(self):
+        self.assertEqual(comparar_senhas("abc", "abc"), "Acesso permitido!")
+        self.assertEqual(comparar_senhas("123", "321"), "Acesso negado!")
+
+    def test_media_aprovacao(self):
+        self.assertEqual(media_aprovacao(8, 7, 9), "O aluno está aprovado com média: 8.0!")
+        self.assertEqual(media_aprovacao(5, 6, 4), "O aluno está reprovado com média: 5.0!")
+        self.assertEqual(media_aprovacao(15, 2, 3), "Média inválida!")
+
+    def test_ordenar_decrescente(self):
+        self.assertEqual(ordenar_decrescente(5, 2, 9), [9, 5, 2])
+
+    def test_litros_combustivel(self):
+        distancia, litros = litros_combustivel(2, 60)
+        self.assertEqual(distancia, 120)
+        self.assertEqual(litros, 10)
+
+
+if __name__ == "__main__":
+    unittest.main()
