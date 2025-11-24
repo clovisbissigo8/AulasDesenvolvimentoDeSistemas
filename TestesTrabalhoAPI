@@ -1,0 +1,82 @@
+import pytest
+from fastapi.testclient import TestClient
+from main import app, db_tarefas, _next_id
+
+client = TestClient(app)
+
+# Limpa o "banco" antes de cada teste
+@pytest.fixture(autouse=True)
+def limpar_db():
+    db_tarefas.clear()
+    import main as main_mod
+    main_mod._next_id = 1
+
+
+# criar
+def test_criar_tarefa_sucesso():
+    resp = client.post("/tarefas", json={"titulo": "Comprar leite", "descricao": "mercado"})
+    assert resp.status_code == 201
+    data = resp.json()
+    assert data["id"] == 1
+    assert data["titulo"] == "Comprar leite"
+    assert data["concluida"] is False
+
+def test_criar_tarefa_sem_titulo():
+    resp = client.post("/tarefas", json={"descricao": "faltou título"})
+    assert resp.status_code in (400, 422)
+
+
+# listar
+def test_listar_vazio():
+    resp = client.get("/tarefas")
+    assert resp.status_code == 200
+    assert resp.json() == []
+
+def test_listar_com_itens():
+    client.post("/tarefas", json={"titulo": "T1"})
+    client.post("/tarefas", json={"titulo": "T2"})
+    resp = client.get("/tarefas")
+    assert len(resp.json()) == 2
+
+
+# buscar
+def test_busca_por_id_valido():
+    criado = client.post("/tarefas", json={"titulo": "Estudar"}).json()
+    resp = client.get(f"/tarefas/{criado['id']}")
+    assert resp.status_code == 200
+    assert resp.json()["titulo"] == "Estudar"
+
+def test_busca_por_id_inexistente():
+    resp = client.get("/tarefas/999")
+    assert resp.status_code == 404
+
+
+# atualizar
+def test_atualizar_sucesso():
+    criado = client.post("/tarefas", json={"titulo": "Original"}).json()
+    resp = client.put(f"/tarefas/{criado['id']}",
+                      json={"titulo": "Novo", "descricao": "nova", "concluida": True})
+    assert resp.status_code == 200
+    assert resp.json()["titulo"] == "Novo"
+
+def test_atualizar_id_inexistente():
+    resp = client.put("/tarefas/999",
+                      json={"titulo": "X", "descricao": None, "concluida": False})
+    assert resp.status_code == 404
+
+
+# deletar
+def test_deletar_sucesso_e_verificar():
+    criado = client.post("/tarefas", json={"titulo": "Apagar"}).json()
+    delete = client.delete(f"/tarefas/{criado['id']}")
+    assert delete.status_code == 204
+
+    buscar = client.get(f"/tarefas/{criado['id']}")
+    assert buscar.status_code == 404
+
+def test_deletar_inexistente():
+    resp = client.delete("/tarefas/999")
+    assert resp.status_code == 404
+
+
+
